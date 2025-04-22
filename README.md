@@ -10,14 +10,6 @@ docker compose up
 
 Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
 
-## Stop the System
+## Usage
 
-```bash
-docker compose down
-```
-
-## Remove all container
-
-```bash
-docker compose down --rmi all
-```
+Call route `http://localhost:3050/api/postal-codes?postalCode=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
