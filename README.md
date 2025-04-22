@@ -1,6 +1,19 @@
-# Postal code API
+<p align="center">
+    <img width="300px" height="300px" src="./assets/logo.png" />
+    <h1 align="center"> PostalCodes API </h1>
+</p>
 
-## Run the System
+## Demo
+
+Find by code:
+
+[https://postalcodes.dev/postal-codes?code=30120&country=FR](https://postalcodes.dev/postal-codes?code=30120&country=FR)
+
+Find by city:
+
+[https://postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR](https://postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR)
+
+## Run the project
 
 ```bash
 docker compose up
