@@ -7,5 +7,5 @@ export default (app) => {
   // Retrieve all Tutorials
   router.get("/", postalCode.findAll);
 
-  app.use("/api/postal-codes", router);
+  app.use("/postal-codes", router);
 };

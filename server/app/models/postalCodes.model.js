@@ -25,6 +25,18 @@ export default (sequelize, Sequelize) => {
     },
     {
       timestamps: false,
+      indexes: [
+        {
+          name: "country_city_index",
+          using: "BTREE",
+          fields: ["country", { name: "city", order: "ASC" }],
+        },
+        {
+          name: "postalCode_country_city_index",
+          using: "BTREE",
+          fields: ["postalCode", "country", { name: "city", order: "ASC" }],
+        },
+      ],
     }
   );
 
