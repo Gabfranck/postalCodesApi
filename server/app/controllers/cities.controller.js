@@ -4,12 +4,12 @@ const PostalCodes = db.postalCodes;
 const Op = db.Sequelize.Op;
 
 export const findAll = async (req, res) => {
+  const postalCode = req.query.code;
   const country = req.query.country;
-  const city = req.query.city;
 
-  if (!country || !city) {
+  if (!country || !postalCode) {
     res.status(400).send({
-      message: "Country and city are required",
+      message: "Country and postal code are required",
     });
     return;
   }
@@ -19,7 +19,7 @@ export const findAll = async (req, res) => {
       attributes: ["postalCode", "city", "country"],
       where: {
         country: country,
-        city: { [Op.iLike]: `%${city}%` },
+        postalCode: { [Op.like]: `%${postalCode}%` },
       },
       order: [["city", "ASC"]],
     });

@@ -7,7 +7,7 @@
 
 - Search by postal code:
 
-[https://postalcodes.dev/postal-codes?code=30120&country=FR](https://postalcodes.dev/postal-codes?code=30120&country=FR)
+[https://postalcodes.dev/cities?code=30120&country=FR](https://postalcodes.dev/cities?code=30120&country=FR)
 
 - Search by city:
 
@@ -19,7 +19,7 @@ To find postal codes, use the following routes:
 
 - Search by postal code:
 
-`http://localhost:3050/postal-codes?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
+`http://localhost:3050/cities?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
 
 - Search by city:
 

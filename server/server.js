@@ -1,7 +1,10 @@
 import express from "express";
 import cors from "cors";
+
 import db from "./app/models/index.js";
+
 import postalCodesRoutes from "./app/routes/postalCodes.routes.js";
+import citiesRoutes from "./app/routes/cities.routes.js";
 
 const app = express();
 
@@ -37,6 +40,7 @@ app.get("/", (req, res) => {
 });
 
 postalCodesRoutes(app);
+citiesRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 3000;
