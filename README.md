@@ -84,3 +84,11 @@ docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postal
 ```
 
 Your server should be up, test it by pinging your URL
+
+## Data
+
+Based on 1,826,137 postal codes from Opendatasoft here:
+
+[https://data.opendatasoft.com/explore/dataset/geonames-postal-code%40public/information/](https://data.opendatasoft.com/explore/dataset/geonames-postal-code%40public/information/)
+
+Last update : **2025-04-10**
