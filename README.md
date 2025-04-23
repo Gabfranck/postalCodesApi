@@ -3,38 +3,84 @@
     <h1 align="center"> PostalCodes API </h1>
 </p>
 
-## Demo
+## Live Demo
 
-Find by code:
+- Search by postal code:
 
 [https://postalcodes.dev/postal-codes?code=30120&country=FR](https://postalcodes.dev/postal-codes?code=30120&country=FR)
 
-Find by city:
+- Search by city:
 
 [https://postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR](https://postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR)
 
-## Run the project
+## Usage
+
+To find postal codes, use the following routes:
+
+- Search by postal code:
+
+`http://localhost:3050/postal-codes?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
+
+- Search by city:
+
+`http://localhost:3050/postal-codes?city=[YOUR_CITY]&country=[YOUR_COUNTRY_CODE]`
+
+### Parameters
+
+| Name    | Requirement                        |
+| ------- | ---------------------------------- |
+| country | Required                           |
+| code    | Required if 'city' is not provided |
+| city    | Required if 'code' is not provided |
+
+## Installation (Development)
+
+### 1. Run docker compose
 
 ```bash
 docker compose up
 ```
 
-## Import database
+### 2. Import database
 
 Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
 
-## Usage
+```bash
+unzip dump/postalCodes.sql.zip dump/postalCodes.sql
+docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
+```
 
-Call route `http://localhost:3050/postal-codes?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
+## Installation (Prod)
 
-or
+### 1. Update Nginx config
 
-Call route `http://localhost:3050/postal-codes?city=[YOUR_CITY]&country=[YOUR_COUNTRY_CODE]`
+Replace `postalcodes.dev` mentions in nginx.conf and nginx-ssl.conf by your own domain
 
-### Params
+### 2. Générate SSL certificate
 
-| name    | required                           |
-| ------- | ---------------------------------- |
-| country | required                           |
-| code    | required if 'city' is not provided |
-| city    | required if 'code' is not provided |
+```bash
+docker compose -f docker-compose-prod.yml up
+```
+
+Wait for certbot image to generate certificates.
+
+### 3. Replace nginx conf file by SSL one
+
+Replace nginx.conf content with nginx-ssl.conf content
+
+### 4. Run docker compose in background mode
+
+```bash
+docker compose -f docker-compose-prod.yml up -d
+```
+
+### 5. Import database
+
+Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
+
+```bash
+unzip dump/postalCodes.sql.zip dump/postalCodes.sql
+docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
+```
+
+Your server should be up, test it by pinging your URL
