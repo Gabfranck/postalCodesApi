@@ -2,10 +2,10 @@ import "dotenv/config";
 import express from "express";
 import cors from "cors";
 
-import db from "./app/models/index.js";
+import db from "./models/index.js";
 
-import searchRoutes from "./app/routes/search.routes.js";
-import codeRoutes from "./app/routes/code.routes.js";
+import searchRoutes from "./routes/search.routes.js";
+import codeRoutes from "./routes/code.routes.js";
 
 const app = express();
 

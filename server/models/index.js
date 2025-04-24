@@ -1,5 +1,5 @@
 import Sequelize from "sequelize";
-import dbConfig from "../config/db.config.js";
+import dbConfig from "../config/config.js";
 import PostalCodes from "./postalCodes.model.js";
 
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {

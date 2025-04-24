@@ -11,6 +11,8 @@ services:
       - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
     volumes:
       - ./db:/var/lib/postgresql/data
+    expose:
+      - $POSTGRESDB_LOCAL_PORT
     networks:
       - app-network
 

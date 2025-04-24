@@ -13,6 +13,9 @@ export default (sequelize, Sequelize) => {
       city: {
         type: Sequelize.STRING,
       },
+      city_ascii: {
+        type: Sequelize.STRING,
+      },
       country_code: {
         type: Sequelize.STRING,
       },
@@ -41,12 +44,12 @@ export default (sequelize, Sequelize) => {
         {
           name: "country_city_index",
           using: "BTREE",
-          fields: ["country_code", { name: "city", order: "ASC" }],
+          fields: ["country_code", { name: "city_ascii", order: "ASC" }],
         },
         {
           name: "postalCode_country_city_index",
           using: "BTREE",
-          fields: ["country_code", "postal_code", { name: "city", order: "ASC" }],
+          fields: ["country_code", "postal_code", { name: "city_ascii", order: "ASC" }],
         },
       ],
     }

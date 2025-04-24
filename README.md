@@ -75,11 +75,11 @@ docker compose -f docker-compose-dev.yml up
 
 ### 2. Import database
 
-Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
+Unzip dump/postal_codes.sql.zip and import psql dump file postal_codes.sql
 
 ```bash
-gzip - d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
-docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
+gzip -d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
+docker exec -i postalcodesapi-postgresdb-1 psql -d db -U postgres < dump/postal_codes.sql
 ```
 
 ## Installation (Prod)
@@ -132,11 +132,11 @@ docker compose -f docker-compose-prod.yml up -d
 
 ### 4. Import database
 
-Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
+Unzip dump/postal_codes.sql.zip and import psql dump file postal_codes.sql
 
 ```bash
-gzip - d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
-docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
+gzip -d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
+docker exec -i postalcodesapi-postgresdb-1 psql -d db -U postgres < dump/postal_codes.sql
 ```
 
 Your server should be up, test it by pinging `[YOUR_DOMAIN]/postal-codes?city=30120&country=FR` for expample.

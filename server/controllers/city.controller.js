@@ -3,13 +3,20 @@ import db from "../models/index.js";
 const PostalCodes = db.postalCodes;
 const Op = db.Sequelize.Op;
 
-export const findAll = async (req, res) => {
-  const postalCode = req.query.code;
-  const countries = req.query.countries;
+const unaccent = (str) => {
+  return str
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+};
 
-  if (!countries || !postalCode) {
+export const findAll = async (req, res) => {
+  const countries = req.query.countries;
+  const city = req.query.city;
+
+  if (!countries || !city) {
     res.status(400).send({
-      message: "countries and postal code are required",
+      message: "countries and city parameters are required",
     });
     return;
   }
@@ -25,13 +32,16 @@ export const findAll = async (req, res) => {
         "admin_name_3",
         "longitude",
         "latitude",
+        "city_ascii",
       ],
       where: {
         country_code: { [Op.in]: countries.split(",").map((c) => c.toUpperCase()) },
-        postal_code: { [Op.like]: `%${postalCode}%` },
+        city_ascii: {
+          [Op.like]: `%${unaccent(city)}%`,
+        },
       },
       order: [
-        ["city", "ASC"],
+        ["city_ascii", "ASC"],
         ["postal_code", "ASC"],
       ],
     });
