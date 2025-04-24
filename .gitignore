@@ -2,3 +2,4 @@
 node_modules
 .env
 dump/postalCodes.sql
+db

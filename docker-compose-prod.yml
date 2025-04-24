@@ -10,7 +10,7 @@ services:
     ports:
       - $POSTGRESDB_LOCAL_PORT:$POSTGRESDB_DOCKER_PORT
     volumes:
-      - db:/var/lib/postgres
+      - ./db:/var/lib/postgresql/data
     networks:
       - app-network
 
