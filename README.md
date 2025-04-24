@@ -19,11 +19,11 @@ To find postal codes, use the following routes:
 
 - Search by postal code:
 
-`http://localhost:3050/cities?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
+`http://localhost/cities?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
 
 - Search by city:
 
-`http://localhost:3050/postal-codes?city=[YOUR_CITY]&country=[YOUR_COUNTRY_CODE]`
+`http://localhost/postal-codes?city=[YOUR_CITY]&country=[YOUR_COUNTRY_CODE]`
 
 ### Parameters
 

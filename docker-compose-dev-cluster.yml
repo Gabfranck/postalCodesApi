@@ -15,6 +15,8 @@ services:
       - app-network
 
   app:
+    deploy:
+      replicas: $API_REPLICAS
     depends_on:
       - postgresdb
     build:
@@ -30,12 +32,20 @@ services:
       - DB_PORT=$POSTGRESDB_LOCAL_PORT
     stdin_open: true
     tty: true
-    expose:
-      - 3000
-    ports:
-      - 3000:3000
     volumes:
       - ./server:/server
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx-dev.conf:/etc/nginx/nginx.conf
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - 80:80
     networks:
       - app-network
 
