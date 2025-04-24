@@ -29,21 +29,16 @@ db.sequelize
     console.log("Failed to sync db: " + err.message);
   });
 
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
-
 // simple route
 app.get("/", (req, res) => {
-  res.json({ message: "Welcome to postal code API." });
+  res.json({ message: "Welcome to PostalCodesAPI" });
 });
 
 postalCodesRoutes(app);
 citiesRoutes(app);
 
 // set port, listen for requests
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });

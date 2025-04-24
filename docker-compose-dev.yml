@@ -15,13 +15,15 @@ services:
       - app-network
 
   app:
+    deploy:
+      replicas: $API_REPLICAS
     depends_on:
       - postgresdb
-    build: ./server
+    build:
+      context: ./server
+      dockerfile: Dockerfile-dev
     restart: unless-stopped
     env_file: ./.env
-    ports:
-      - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     environment:
       - DB_HOST=postgresdb
       - DB_USER=$POSTGRESDB_USER
@@ -30,6 +32,20 @@ services:
       - DB_PORT=$POSTGRESDB_LOCAL_PORT
     stdin_open: true
     tty: true
+    volumes:
+      - ./server:/server
+    networks:
+      - app-network
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    restart: always
+    depends_on:
+      - app
+    ports:
+      - 80:80
     networks:
       - app-network
 

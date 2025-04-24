@@ -38,7 +38,7 @@ To find postal codes, use the following routes:
 ### 1. Run docker compose
 
 ```bash
-docker compose up
+docker compose -f docker-compose-dev.yml up
 ```
 
 ### 2. Import database
