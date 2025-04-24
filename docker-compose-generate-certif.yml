@@ -1,7 +1,7 @@
 services:
   postgresdb:
     image: postgres
-    restart: unless-stopped
+    restart: always
     env_file: ./.env
     environment:
       - POSTGRES_USER=$POSTGRESDB_USER
@@ -21,8 +21,8 @@ services:
       - postgresdb
     build:
       context: ./server
-      dockerfile: Dockerfile-dev
-    restart: unless-stopped
+      dockerfile: Dockerfile-prod
+    restart: always
     env_file: ./.env
     environment:
       - DB_HOST=postgresdb
@@ -30,24 +30,34 @@ services:
       - DB_PASSWORD=$POSTGRESDB_ROOT_PASSWORD
       - DB_NAME=$POSTGRESDB_DATABASE
       - DB_PORT=$POSTGRESDB_LOCAL_PORT
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./server:/server
     networks:
       - app-network
 
   nginx:
     image: nginx:latest
     volumes:
-      - ./nginx-dev.conf:/etc/nginx/nginx.conf
+      - ./nginx-generate-certif.conf:/etc/nginx/nginx.conf
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
     restart: always
     depends_on:
       - app
     ports:
       - 80:80
+      - 443:443
     networks:
       - app-network
+
+  certbot:
+    image: certbot/certbot
+    depends_on:
+      - nginx
+    networks:
+      - app-network
+    volumes:
+      - ./certbot/conf:/etc/letsencrypt
+      - ./certbot/www:/var/www/certbot
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email $CERTBOT_MAIL -d $DOMAIN --agree-tos --non-interactive
 
 networks:
   app-network:

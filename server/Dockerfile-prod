@@ -7,11 +7,8 @@ WORKDIR /usr/src/app
 # Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Install dependencies
-RUN npm ci --only=production
-
 # Copy the rest of your app's source code
 COPY . .
 
 # Define the command to run your app using CMD which defines your runtime
-CMD ["node", "server.js"]
+CMD npm ci --only=production && npm start
