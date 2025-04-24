@@ -7,13 +7,25 @@ export default (sequelize, Sequelize) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      postalCode: {
+      postal_code: {
         type: Sequelize.STRING,
       },
       city: {
         type: Sequelize.STRING,
       },
+      country_code: {
+        type: Sequelize.STRING,
+      },
       country: {
+        type: Sequelize.STRING,
+      },
+      admin_name_1: {
+        type: Sequelize.STRING,
+      },
+      admin_name_2: {
+        type: Sequelize.STRING,
+      },
+      admin_name_3: {
         type: Sequelize.STRING,
       },
       longitude: {
@@ -29,12 +41,12 @@ export default (sequelize, Sequelize) => {
         {
           name: "country_city_index",
           using: "BTREE",
-          fields: ["country", { name: "city", order: "ASC" }],
+          fields: ["country_code", { name: "city", order: "ASC" }],
         },
         {
           name: "postalCode_country_city_index",
           using: "BTREE",
-          fields: ["postalCode", "country", { name: "city", order: "ASC" }],
+          fields: ["country_code", "postal_code", { name: "city", order: "ASC" }],
         },
       ],
     }

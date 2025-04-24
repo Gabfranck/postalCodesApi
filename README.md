@@ -19,19 +19,21 @@ To find postal codes, use the following routes:
 
 - Search by postal code:
 
-`http://localhost/cities?code=[YOUR_POSTAL_CODE]&country=[YOUR_COUNTRY_CODE]`
+`http://localhost/search?code=[YOUR_POSTAL_CODE]&countries=[YOUR_COUNTRY_CODES]`
+
+| Name      | Requirement                        |
+| --------- | ---------------------------------- |
+| countries | Required, coma separated           |
+| code      | Required if 'city' is not provided |
 
 - Search by city:
 
-`http://localhost/postal-codes?city=[YOUR_CITY]&country=[YOUR_COUNTRY_CODE]`
+`http://localhost/code/city?city=[YOUR_CITY]&countries=[YOUR_COUNTRY_CODES]`
 
-### Parameters
-
-| Name    | Requirement                        |
-| ------- | ---------------------------------- |
-| country | Required                           |
-| code    | Required if 'city' is not provided |
-| city    | Required if 'code' is not provided |
+| Name      | Requirement                        |
+| --------- | ---------------------------------- |
+| countries | Required, coma separated           |
+| code      | Required if 'city' is not provided |
 
 ## Installation (Development)
 
@@ -76,7 +78,7 @@ docker compose -f docker-compose-dev.yml up
 Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
 
 ```bash
-unzip dump/postalCodes.sql.zip dump/postalCodes.sql
+gzip - d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
 docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
 ```
 
@@ -122,22 +124,18 @@ docker compose -f docker-compose-generate-certif.yml up
 
 Wait for certbot image to generate certificates.
 
-### 3. Replace nginx conf file by SSL one
-
-Replace nginx.conf content with nginx-prod.conf content
-
-### 4. Run docker compose in background mode
+### 3. Run docker compose in background mode
 
 ```bash
 docker compose -f docker-compose-prod.yml up -d
 ```
 
-### 5. Import database
+### 4. Import database
 
 Unzip dump/postalCodes.sql.zip and import psql dump file postalCodes.sql
 
 ```bash
-unzip dump/postalCodes.sql.zip dump/postalCodes.sql
+gzip - d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
 docker exec -i postal-code-api-postgresdb-1 psql -d db -U postgres < dump/postalCodes.sql
 ```
 

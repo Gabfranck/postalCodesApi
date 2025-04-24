@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
 .env
-dump/postalCodes.sql
+dump/postal_codes.sql
 db
 certbot
