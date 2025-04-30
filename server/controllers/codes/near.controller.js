@@ -16,7 +16,7 @@ export const findAll = async (req, res) => {
 
   try {
     const data = await sequelize.query(
-      `SELECT *, ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(:lat,:lng), 4326)::geography) as distance
+      `SELECT *, ST_DistanceSphere(geom, ST_SetSRID(ST_MakePoint(:lat,:lng), 4326)) as distance
       FROM postal_codes
       WHERE ST_DWithin(geom::geography,ST_SetSRID(ST_MakePoint(:lat,:lng),4326)::geography, :radius * 1000) ${
         countries ? "AND country_code IN (:countries)" : ""
@@ -24,8 +24,8 @@ export const findAll = async (req, res) => {
       {
         type: sequelize.QueryTypes.SELECT,
         replacements: {
-          lat: Number(coord.split(",")[0]),
-          lng: Number(coord.split(",")[1]),
+          lng: Number(coord.split(",")[0]),
+          lat: Number(coord.split(",")[1]),
           radius: radius ? radius : 10,
           countries: countries ? countries.split(",").map((c) => c.toUpperCase()) : null,
         },
