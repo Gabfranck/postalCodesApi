@@ -16,11 +16,11 @@ export const findAll = async (req, res) => {
 
   try {
     const data = await sequelize.query(
-      `SELECT *
+      `SELECT *, ST_Distance(geom::geography, ST_SetSRID(ST_MakePoint(:lat,:lng), 4326)::geography) as distance
       FROM postal_codes
       WHERE ST_DWithin(geom::geography,ST_SetSRID(ST_MakePoint(:lat,:lng),4326)::geography, :radius * 1000) ${
         countries ? "AND country_code IN (:countries)" : ""
-      } LIMIT 100`,
+      } ORDER BY distance`,
       {
         type: sequelize.QueryTypes.SELECT,
         replacements: {
