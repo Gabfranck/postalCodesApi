@@ -4,8 +4,8 @@ import cors from "cors";
 
 import db from "./models/index.js";
 
-import searchRoutes from "./routes/search.routes.js";
-import codeRoutes from "./routes/code.routes.js";
+import codeRoutes from "./routes/codes.routes.js";
+import citiesRoutes from "./routes/cities.routes.js";
 
 const app = express();
 
@@ -35,8 +35,8 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to PostalCodesAPI" });
 });
 
-searchRoutes(app);
 codeRoutes(app);
+citiesRoutes(app);
 
 // set port, listen for requests
 const PORT = process.env.API_PORT || 8080;

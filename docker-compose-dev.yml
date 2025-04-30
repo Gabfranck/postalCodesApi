@@ -1,6 +1,6 @@
 services:
   postgresdb:
-    image: postgres
+    image: postgis/postgis
     restart: unless-stopped
     env_file: ./.env
     environment:
@@ -31,9 +31,9 @@ services:
     stdin_open: true
     tty: true
     expose:
-      - 3000
+      - $API_PORT
     ports:
-      - 3000:3000
+      - $API_PORT:$API_PORT
     volumes:
       - ./server:/server
     networks:

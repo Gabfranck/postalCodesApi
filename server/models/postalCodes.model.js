@@ -1,3 +1,5 @@
+import { literal } from "sequelize";
+
 export default (sequelize, Sequelize) => {
   const PostalCodes = sequelize.define(
     "postal_codes",
@@ -37,6 +39,9 @@ export default (sequelize, Sequelize) => {
       latitude: {
         type: Sequelize.FLOAT,
       },
+      geom: {
+        type: Sequelize.GEOMETRY,
+      },
     },
     {
       timestamps: false,
@@ -50,6 +55,11 @@ export default (sequelize, Sequelize) => {
           name: "postalCode_country_city_index",
           using: "BTREE",
           fields: ["country_code", "postal_code", { name: "city_ascii", order: "ASC" }],
+        },
+        {
+          name: "postalCode_geom_index",
+          using: "GIST",
+          fields: [literal("geography(geom)")],
         },
       ],
     }

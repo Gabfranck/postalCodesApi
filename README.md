@@ -7,33 +7,66 @@
 
 - Search by postal code:
 
-[https://api.postalcodes.dev/cities?code=30120&country=FR](https://api.postalcodes.dev/cities?code=30120&country=FR)
+[https://api.postalcodes.dev/codes/search?code=30120&countries=FR](https://api.postalcodes.dev/codes/search?code=30120&countries=FR)
 
-- Search by city:
+- Search by city name:
 
-[https://api.postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR](https://api.postalcodes.dev/postal-codes?city=Le%20Vigan&country=FR)
+[https://api.postalcodes.dev/cities/search?city=Le%20Vigan&countries=FR](https://api.postalcodes.dev/cities/search?city=Le%20Vigan&countries=FR)
+
+- Postal codes by coordinates:
+
+[https://api.postalcodes.dev/codes/near?coord=43.9833,3.6&countries=FR](https://api.postalcodes.dev/codes/near?coord=43.9833,3.6&countries=FR)
+
+- Cities by coordinates:
+
+[https://api.postalcodes.dev/cities/near?coord=43.9833,3.6&countries=FR](https://api.postalcodes.dev/cities/near?coord=43.9833,3.6&countries=FR)
 
 ## Usage
 
+### /codes/search
+
 To find postal codes, use the following routes:
 
-- Search by postal code:
+`http://localhost:8080/codes/search?code=[YOUR_POSTAL_CODE]&countries=[YOUR_COUNTRY_CODES]`
 
-`http://localhost/search?code=[YOUR_POSTAL_CODE]&countries=[YOUR_COUNTRY_CODES]`
+| Name      | type                      | Requirement           |
+| --------- | ------------------------- | --------------------- |
+| code      | Postal code               | Required              |
+| countries | ISO codes, coma separated | Recommended for speed |
+| exact     | boolean (default: false)  | Optional              |
 
-| Name      | Requirement                        |
-| --------- | ---------------------------------- |
-| countries | Required, coma separated           |
-| code      | Required if 'city' is not provided |
+### /codes/near
 
-- Search by city:
+To find postal codes by coordinates, use the following routes:
 
-`http://localhost/code/city?city=[YOUR_CITY]&countries=[YOUR_COUNTRY_CODES]`
+`http://localhost:8080/codes/need?coord=[YOUR_COORD]&countries=[YOUR_COUNTRY_CODES]`
 
-| Name      | Requirement                        |
-| --------- | ---------------------------------- |
-| countries | Required, coma separated           |
-| code      | Required if 'city' is not provided |
+| Name      | type                       | Requirement           |
+| --------- | -------------------------- | --------------------- |
+| coord     | GPS coordinates (lat,long) | Required              |
+| radius    | radius in km               | Default: 10, max: 100 |
+| countries | ISO codes, coma separated  | Recommended for speed |
+
+### /cities/search
+
+To find postal codes, use the following routes:
+
+`http://localhost:8080/cities/search?city=[YOUR_CITY]&countries=[YOUR_COUNTRY_CODES]`
+
+| Name      | type                     | Requirement           |
+| --------- | ------------------------ | --------------------- |
+| city      | city name                | Required              |
+| countries | ISO code, coma separated | Recommended for speed |
+
+### /cities/near
+
+`http://localhost:8080/cities/need?coord=[YOUR_COORD]&countries=[YOUR_COUNTRY_CODES]`
+
+| Name      | type                       | Requirement           |
+| --------- | -------------------------- | --------------------- |
+| coord     | GPS coordinates (lat,long) | Required              |
+| radius    | radius in km               | Default: 10, max: 100 |
+| countries | ISO code, coma separated   | Recommended for speed |
 
 ## Installation (Development)
 
@@ -50,7 +83,7 @@ POSTGRESDB_DOCKER_PORT=5432
 
 CERTBOT_MAIL=yourmail@mail.io
 
-DOMAIN=yourdomain.io
+API_PORT=8080
 
 API_REPLICAS=2
 ```
@@ -101,6 +134,8 @@ CERTBOT_MAIL=yourmail@mail.io
 
 DOMAIN=yourdomain.io
 
+API_PORT=8080
+
 API_REPLICAS=2
 ```
 
@@ -139,7 +174,7 @@ gzip -d < "dump/postal_codes.sql.gz" > "dump/postal_codes.sql"
 docker exec -i postalcodesapi-postgresdb-1 psql -d db -U postgres < dump/postal_codes.sql
 ```
 
-Your server should be up, test it by pinging `[YOUR_DOMAIN]/postal-codes?city=30120&country=FR` for expample.
+Your server should be up, test it by pinging `[YOUR_DOMAIN]/codes/search?code=30120&countries=FR` for expample.
 
 ## Data
 

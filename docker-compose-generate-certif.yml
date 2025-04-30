@@ -1,6 +1,6 @@
 services:
   postgresdb:
-    image: postgres
+    image: postgis/postgis
     restart: always
     env_file: ./.env
     environment:
